@@ -1,0 +1,9 @@
+# ---- Core de Datos y Transformación ----
+pandas>=2.0.0
+pyarrow>=11.0.0
+
+# ---- Calidad de Datos y Pruebas ----
+pytest>=7.0.0
+
+# ---- Opcionales según Implementación Real de APIs (Jonathan) ----
+requests>=2.31.0
