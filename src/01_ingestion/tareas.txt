@@ -1,0 +1,5 @@
+3.1. Jonathan: Ingesta y Orquestación (DAG 1 y Pipeline Central)
+Responsabilidad: Desarrollo de los scripts de conexión a fuentes (simulados) y el archivo main.py que coordina el orden de ejecución.
+src/01_ingestion/generate_mock_data.py: Simulación de respuestas de Shopify (Ventas), PostgreSQL (CRM) y MySQL (Inventario).
+src/01_ingestion/load_to_landing.py: Escritura de los datos en formato CSV/JSON dentro de la capa Landing.
+main.py: Ejecución estructurada en hitos, garantizando que el pipeline se detenga si la fase de ingesta falla.

@@ -1,0 +1,14 @@
+3.2. Eu: Infraestructura, Modelado y Gobierno de Datos (DAG 3 y DAG 6)
+Responsabilidad: Construcción del motor analítico, creación de dimensiones/hechos y aplicación de normativas de seguridad (Enmascaramiento).
+src/03_transformation/build_dwh.py: Script para consolidar Fact_Ventas, Dim_Cliente, Dim_Producto y Dim_Tiempo en formato Parquet.
+src/utils/security.py: Funciones criptográficas (SHA-256) para hashear nombres o datos sensibles, cumpliendo con la gobernanza (RBAC).
+docs/03_gobierno_seguridad.md: Documentación de la matriz de accesos y justificación de protección de PII.
+
+
+3.3. Nicole: Calidad, Observabilidad y MLOps (DAG 2, DAG 4 y DAG 5)
+Responsabilidad: Asegurar la validez de los datos, crear notificaciones automáticas y preparar el entorno para la Inteligencia Artificial.
+src/02_validation/data_quality.py: Algoritmos de Branching que filtran datos nulos y duplicados hacia la carpeta de Cuarentena.
+src/utils/logger.py: Sistema de centralización de logs y simulación de webhooks hacia Slack/Teams para alertas críticas.
+.github/workflows/ci_cd.yml: Configuración de pruebas automatizadas con pytest para garantizar la integridad del código.
+docs/04_mlops_drift.md: Planteamiento teórico sobre la detección del Data Drift y el reentrenamiento de modelos predictivos.
+
