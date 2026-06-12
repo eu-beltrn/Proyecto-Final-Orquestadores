@@ -1,28 +1,35 @@
 import os
+import time
 from .generate_mock_data import extraer_api_ventas, extraer_bd_clientes
 
-def ejecutar_dag_ingesta():
+def ejecutar_dag_ingesta(intentos_maximos=3):
     """
-    Representa el DAG 1 (extraccion_landing_dag). 
-    Extrae de las fuentes y guarda en la Zona de Aterrizaje sin transformar.
+    Representa el DAG 1. Incluye simulación de 'Retries' de Airflow.
     """
     ruta_landing = "data/01_landing/"
     os.makedirs(ruta_landing, exist_ok=True)
     
-    try:
-        print("  [Tarea 1.1] Conectando a API de Ventas...")
-        df_ventas = extraer_api_ventas()
-        df_ventas.to_csv(f"{ruta_landing}raw_ventas.csv", index=False)
-        print(f"  [Éxito] Ventas extraídas y guardadas en Landing ({len(df_ventas)} filas).")
-        
-        print("  [Tarea 1.2] Conectando a Base de Datos de Clientes...")
-        df_clientes = extraer_bd_clientes()
-        # Guardamos en formato JSON Lines para variar el tipo de fuente
-        df_clientes.to_json(f"{ruta_landing}raw_clientes.json", orient="records", lines=True)
-        print(f"  [Éxito] Clientes extraídos y guardados en Landing ({len(df_clientes)} filas).")
-        
-        return True # El DAG finalizó correctamente
-        
-    except Exception as e:
-        print(f"  [ERROR] Fallo crítico durante la ingesta: {str(e)}")
-        return False # El DAG falló
+    intento_actual = 1
+    
+    while intento_actual <= intentos_maximos:
+        try:
+            print(f"  [Intento {intento_actual}/{intentos_maximos}] Conectando a fuentes de datos...")
+            
+            df_ventas = extraer_api_ventas()
+            df_ventas.to_csv(f"{ruta_landing}raw_ventas.csv", index=False)
+            
+            df_clientes = extraer_bd_clientes()
+            df_clientes.to_json(f"{ruta_landing}raw_clientes.json", orient="records", lines=True)
+            
+            print(f"  [Éxito] Datos extraídos y guardados en Landing Zone.")
+            return True # Salió bien, rompemos el bucle y devolvemos True
+            
+        except Exception as e:
+            print(f"  [ERROR] Fallo de conexión: {str(e)}")
+            if intento_actual < intentos_maximos:
+                print("  [*] Reintentando en 2 segundos... (Simulando Airflow Retry)")
+                time.sleep(2)
+            intento_actual += 1
+            
+    print("  [ERROR CRÍTICO] Se agotaron los reintentos. El DAG 1 ha fallado.")
+    return False
