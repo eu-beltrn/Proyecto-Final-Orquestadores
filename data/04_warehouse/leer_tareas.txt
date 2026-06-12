@@ -1,0 +1,5 @@
+3. Transformación y Modelo Estrella (Eu)
+El código: src/03_transformation/build_dwh.py
+
+La acción: Toma los datos limpios de data/02_raw/, les aplica el enmascaramiento de seguridad (src/utils/security.py), cruza las tablas y genera el Modelo Estrella (Hechos y Dimensiones) optimizado. El resultado final lo guarda en data/04_warehouse/ (seguramente en formato Parquet).
+

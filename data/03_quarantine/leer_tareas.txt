@@ -1,0 +1,9 @@
+2. Calidad y Validación (Nicole)
+El código: src/02_validation/data_quality.py
+
+La acción: Lee los archivos que Jonathan dejó en data/01_landing/. Aplica las reglas de limpieza (revisar nulos o duplicados).
+
+Los datos limpios los guarda en data/02_raw/.
+
+Los datos corruptos o con errores los desvía a data/03_quarantine/ para que no ensucien el análisis.
+

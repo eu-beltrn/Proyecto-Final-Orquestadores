@@ -1,0 +1,5 @@
+1. Ingesta (Jonathan)
+El código: src/01_ingestion/load_to_landing.py
+
+La acción: Se conecta a las APIs o bases de datos externas, descarga los datos crudos 
+y los guarda directamente en data/01_landing/ en formatos sencillos como CSV o JSON.

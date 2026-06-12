@@ -4,3 +4,4 @@ src/02_validation/data_quality.py: Algoritmos de Branching que filtran datos nul
 src/utils/logger.py: Sistema de centralización de logs y simulación de webhooks hacia Slack/Teams para alertas críticas.
 .github/workflows/ci_cd.yml: Configuración de pruebas automatizadas con pytest para garantizar la integridad del código.
 docs/04_mlops_drift.md: Planteamiento teórico sobre la detección del Data Drift y el reentrenamiento de modelos predictivos.
+
