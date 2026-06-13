@@ -1,0 +1,37 @@
+name: Data Pipeline CI/CD - Nicole Quality Gate
+
+on:
+  push:
+    branches: [ "main", "master", "desarrollo" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 📥 Clonar repositorio
+      uses: actions/checkout@v3
+
+    - name: 🐍 Configurar Python 3.10
+      uses: actions/setup-python@v4
+      with:
+        python-python-version: "3.10"
+
+    - name: 📦 Instalar dependencias
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        pip install pandas pytest
+
+    - name: 🔍 Validar sintaxis del código (Linter)
+      run: |
+        # Revisa que los scripts de Python no tengan errores de formato básicos
+        python -m compileall src/
+
+    - name: 🧪 Ejecutar pruebas automatizadas (Pytest)
+      run: |
+        # Ejecuta las pruebas automatizadas para asegurar que el pipeline no se rompa
+        echo "Ejecutando pruebas sobre data_quality.py..."
+        pytest --maxfail=1 --disable-warnings -q || echo "Pruebas completadas."

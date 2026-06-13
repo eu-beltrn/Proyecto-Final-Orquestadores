@@ -6,6 +6,7 @@ from src.fase01_ingestion.load_to_landing import ejecutar_dag_ingesta
 
 # Importaciones futuras de las compañeras (Descomentar cuando estén listas)
 # from src.02_validation.data_quality import ejecutar_dag_calidad      # Módulo de Nicole
+from src.fase02_validation.data_quality import ejecutar_dag_calidad
 # from src.03_transformation.build_dwh import ejecutar_dag_dwh         # Módulo de Eu
 
 def preparar_entorno():
@@ -37,9 +38,17 @@ def orquestador_airflow_simulado():
     # DAG 2: CALIDAD DE DATOS (NICOLE)
     # ---------------------------------------------------------
     print("\n[DAG 2] Ejecutando: calidad_raw_dag...")
-    print("  -> (Esperando código de Nicole para ejecutarse automáticamente)")
-    # estado_dag_2 = ejecutar_dag_calidad()
-    # if not estado_dag_2: return
+    start_time_dag2 = time.time()
+    
+    estado_dag_2 = ejecutar_dag_calidad()
+    
+    if not estado_dag_2:
+        print("❌ [ALERTA] DAG 2 Falló. Deteniendo el pipeline por seguridad.")
+        return
+        
+    print(f"✅ DAG 2 completado en {round(time.time() - start_time_dag2, 2)}s.")
+    
+    
     
     # ---------------------------------------------------------
     # DAG 3: CARGA A DATA WAREHOUSE (EU)
